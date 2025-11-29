@@ -1,22 +1,32 @@
-let h2 = document.querySelector('h2');
-const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-const text = h2.innerText
+const h2 = document.querySelector("h2");
+const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+const originalText = h2.innerText;
 
-let iterations = 0
+let intervalId = null;
 
-h2.addEventListener('mouseenter', () => {
-    if(iterations>char)
-    hi = setInterval(() =>{
-        const str = text.split('').map((char,index) => {
-            return characters.split('')[Math.floor(Math.random() * 63)]
-        }).join('')
+h2.addEventListener("mouseenter", () => {
+  clearInterval(intervalId);
+  let iteration = 0;
 
-        h2.innerText = str
-        
-    },100)
-})
+  intervalId = setInterval(() => {
+    const scrambledText = originalText
+      .split("")
+      .map((char, idx) => {
+        if (iteration > idx) return char;
 
-h2.addEventListener('mouseleave', () => {
-    h2.innerText = text
-    clearInterval(hi)
-})
+        // extra randomization for better scrambling
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        return characters[randomIndex];
+      })
+      .join("");
+
+    h2.innerText = scrambledText;
+
+    // smaller step = smoother reveal
+    iteration += 0.5;
+
+    if (scrambledText === originalText) {
+      clearInterval(intervalId);
+    }
+  }, 80); // faster cycle = smoother scrambling
+});

@@ -27,5 +27,9 @@ main {
 
     h2{
         font-weight: 400;
+        color: #00ff88;
+        text-shadow: 0 0 2px #00ff88, 0 0 6px #00ff88;
+        transition: color 0.4s ease, text-shadow 0.4s ease;
     }
+
 }
